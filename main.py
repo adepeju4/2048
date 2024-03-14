@@ -189,9 +189,9 @@ def draw_score(y_position):
 
 
 def show_game_over():
-    screen.fill(get_tile_color("dark text"))
+    screen.fill(get_tile_color(8))
     font = pygame.font.SysFont("arial", 50, bold=True)
-    text_game_over = font.render("Game Over!", True, (255, 0, 0))
+    text_game_over = font.render("Game Over!", True, (255, 255, 255))
     text_restart = font.render("Press R to Restart", True, (0, 0, 0))
     text_game_over_rect = text_game_over.get_rect(
         center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)
@@ -208,7 +208,11 @@ def show_game_over():
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
-                    main()
+                    global score, grid
+                    score = 0
+                    grid = np.zeros((GRID_SIZE, GRID_SIZE), dtype=int)
+                    add_new_tile(grid)
+                    add_new_tile(grid)
                     waiting_for_input = False
                 elif event.key == pygame.K_q:
                     pygame.quit()
