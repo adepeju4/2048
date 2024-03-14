@@ -103,14 +103,25 @@ def add_new_tile(grid):
 def check_game_over(grid):
     if 0 in grid:
         return False
+    else:
+        return True
+
+
+def is_game_over(grid):
     for i in range(GRID_SIZE):
         for j in range(GRID_SIZE):
-            if j < GRID_SIZE - 1 and grid[i][j] == grid[i][j + 1]:
+            if grid[i][j] == 0:
                 return False
-            if i < GRID_SIZE - 1 and grid[i][j] == grid[i + 1][j]:
+            if i != 0 and grid[i][j] == grid[i - 1][j]:
+                return False
+            if i != GRID_SIZE - 1 and grid[i][j] == grid[i + 1][j]:
+                return False
+            if j != 0 and grid[i][j] == grid[i][j - 1]:
+                return False
+            if j != GRID_SIZE - 1 and grid[i][j] == grid[i][j + 1]:  #
                 return False
     update_high_score(score)
-    return True
+    return True  # If no possible moves, game is over
 
 
 def update_high_score(new_score):
@@ -273,6 +284,7 @@ def main():
                 elif event.key == pygame.K_RIGHT:
                     update_game("RIGHT")
 
+        print(check_game_over(grid))
         if check_game_over(grid):
             show_game_over()
             running = False
